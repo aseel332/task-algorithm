@@ -13,7 +13,12 @@ export function runCppEngine(input) {
         const enginePath = path.resolve(__dirname, '../../engine/build/engine.exe'); 
         // On Linux/macOS you could just remove .exe
 
-        const cpp = spawn(enginePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+        // getting the route to the public directory to serve the workers.csv file
+        const publicPath = path.resolve(__dirname, '../../public');
+
+        // passing the workes.csv file as command line argument to the cpp engine
+        const cpp = spawn(enginePath, [path.join(publicPath, 'workers.csv')], { stdio: ['pipe', 'pipe', 'pipe'] });
+        // const cpp = spawn(enginePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
 
         let output = '';
         let error = '';
